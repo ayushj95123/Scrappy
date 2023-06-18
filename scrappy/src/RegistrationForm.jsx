@@ -79,7 +79,7 @@ const RegistrationForm = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:3000/auth/register', formData);
+      const response = await axios.post('http://localhost:8000/auth/register', formData);
       const responseData = response.data;
   
       if (response.status === 201) {

@@ -22,7 +22,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', formData);
+      const response = await axios.post('http://localhost:8000/auth/login', formData);
 
       // Store the access token and refresh token in local storage for now
       localStorage.setItem('accessToken', response.data.accessToken);
