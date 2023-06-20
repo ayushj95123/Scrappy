@@ -40,7 +40,7 @@ const MyDrawer = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       const response = await axios.get(
-        'http://localhost:3000/scrapbooks/getScrapBooks',
+        'http://localhost:8000/scrapbooks/getScrapBooks',
         {
           headers: {
             authorization: accessToken,
@@ -60,7 +60,7 @@ const MyDrawer = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       await axios.post(
-        'http://localhost:3000/scrapbooks/addScrapBook',
+        'http://localhost:8000/scrapbooks/addScrapBook',
         {
           title: newScrapbookTitle,
         },
@@ -82,7 +82,7 @@ const MyDrawer = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       await axios.delete(
-        `http://localhost:3000/scrapbooks/${scrapbookId}`,
+        `http://localhost:8000/scrapbooks/${scrapbookId}`,
         {
           headers: {
             authorization: accessToken,
@@ -110,7 +110,7 @@ const MyDrawer = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       await axios.put(
-        `http://localhost:3000/scrapbooks/${editScrapbookId}`,
+        `http://localhost:8000/scrapbooks/${editScrapbookId}`,
         {
           title: editScrapbookTitle,
         },
@@ -149,7 +149,7 @@ const MyDrawer = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       await axios.put(
-        `http://localhost:3000/topics/${editTopicId}`,
+        `http://localhost:8000/topics/${editTopicId}`,
         {
           title: editTopicTitle,
         },
@@ -180,7 +180,7 @@ const MyDrawer = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       await axios.post(
-        `http://localhost:3000/topics/addTopic`,
+        `http://localhost:8000/topics/addTopic`,
         {
           title: topicTitle,
           createdOn: Date.now(),
@@ -203,7 +203,7 @@ const MyDrawer = () => {
   const handleDeleteTopic = async (topicId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
-      await axios.delete(`http://localhost:3000/topics/${topicId}`, {
+      await axios.delete(`http://localhost:8000/topics/${topicId}`, {
         headers: {
           authorization: accessToken,
         },

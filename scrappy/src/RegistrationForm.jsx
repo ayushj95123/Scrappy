@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import axios from 'axios';
 import './RegistrationForm.scss'; 
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const RegistrationForm = () => {
     email: '',
     phoneNumber: '',
   });
+
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
   const [registrationError, setRegistrationError] = useState('');
@@ -79,7 +82,7 @@ const RegistrationForm = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:3000/auth/register', formData);
+      const response = await axios.post('http://localhost:8000/auth/register', formData);
       const responseData = response.data;
   
       if (response.status === 201) {
@@ -95,6 +98,7 @@ const RegistrationForm = () => {
         setErrors({});
         setRegistrationError('');
         setRegistrationSuccess(responseData.message);
+        navigate('/')
       } else {
         // Display error message for 401 and 500 status codes
         setErrors({});

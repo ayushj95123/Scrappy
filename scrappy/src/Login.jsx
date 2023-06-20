@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
 
   const [errors, setErrors] = useState('');
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData((prevFormData) => ({
@@ -22,7 +23,8 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', formData);
+      const response = await axios.post('http://localhost:8000/auth/login', formData);
+      console.log(response)
 
       // Store the access token and refresh token in local storage for now
       localStorage.setItem('accessToken', response.data.accessToken);
@@ -33,18 +35,16 @@ const Login = ({ onLogin }) => {
         password: ''
       });
       setErrors('');
-      onLogin()
       console.log("Login Successful")
-      setLoginSuccess(true);
+      navigate('/dashboard')
 
-      // Redirect or perform any necessary actions after successful login
-    } catch (error) {
+    }
+    catch (error) {
       if (error.response && error.response.status === 401) {
         setErrors('Invalid username or password');
       } else {
         setErrors('Error occurred during login');
       }
-      setLoginSuccess(false);
     }
   };
 
@@ -58,11 +58,7 @@ const Login = ({ onLogin }) => {
           {errors}
         </Typography>
       )}
-      {loginSuccess && (
-        <Typography variant="body1" color="success" gutterBottom>
-          Login successful!
-        </Typography>
-      )}
+
       <form onSubmit={handleSubmit}>
         <TextField
           label="Username"
@@ -87,7 +83,11 @@ const Login = ({ onLogin }) => {
           Login
         </Button>
       </form>
+      <p>
+        Don't have an account? <Link to="/registration">Create an account</Link>
+      </p>
     </Box>
+    
   );
 };
 
