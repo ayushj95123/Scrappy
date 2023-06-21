@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Drawer,
   List,
@@ -10,26 +10,26 @@ import {
   Button,
   Modal,
   Box,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import FolderIcon from '@mui/icons-material/Folder';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
-import ScrapBookModel from './ScrapBookModel';
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import FolderIcon from "@mui/icons-material/Folder";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+import ScrapBookModel from "./ScrapBookModel";
 
 const MyDrawer = () => {
   const [scrapbooks, setScrapbooks] = useState([]);
   const [addScrapbookModalOpen, setAddScrapbookModalOpen] = useState(false);
-  const [newScrapbookTitle, setNewScrapbookTitle] = useState('');
+  const [newScrapbookTitle, setNewScrapbookTitle] = useState("");
   const [editScrapbookId, setEditScrapbookId] = useState(null);
-  const [editScrapbookTitle, setEditScrapbookTitle] = useState('');
+  const [editScrapbookTitle, setEditScrapbookTitle] = useState("");
   const [editScrapbookModalOpen, setEditScrapbookModalOpen] = useState(false);
   const [editTopicId, setEditTopicId] = useState(null);
-  const [editTopicTitle, setEditTopicTitle] = useState('');
+  const [editTopicTitle, setEditTopicTitle] = useState("");
   const [editTopicModalOpen, setEditTopicModalOpen] = useState(false);
 
   useEffect(() => {
@@ -38,9 +38,9 @@ const MyDrawer = () => {
 
   const fetchScrapbooks = async () => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       const response = await axios.get(
-        'http://localhost:8000/scrapbooks/getScrapBooks',
+        "http://localhost:8000/scrapbooks/getScrapBooks",
         {
           headers: {
             authorization: accessToken,
@@ -52,15 +52,15 @@ const MyDrawer = () => {
       );
       setScrapbooks(data);
     } catch (error) {
-      console.error('Error fetching scrapbooks:', error);
+      console.error("Error fetching scrapbooks:", error);
     }
   };
 
   const handleAddScrapbook = async () => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       await axios.post(
-        'http://localhost:8000/scrapbooks/addScrapBook',
+        "http://localhost:8000/scrapbooks/addScrapBook",
         {
           title: newScrapbookTitle,
         },
@@ -71,34 +71,33 @@ const MyDrawer = () => {
         }
       );
       setAddScrapbookModalOpen(false);
-      setNewScrapbookTitle('');
+      setNewScrapbookTitle("");
       fetchScrapbooks();
     } catch (error) {
-      console.error('Error adding scrapbook:', error);
+      console.error("Error adding scrapbook:", error);
     }
   };
 
   const handleDeleteScrapbook = async (scrapbookId) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
-      await axios.delete(
-        `http://localhost:8000/scrapbooks/${scrapbookId}`,
-        {
-          headers: {
-            authorization: accessToken,
-          },
-        }
-      );
+      const accessToken = localStorage.getItem("accessToken");
+      await axios.delete(`http://localhost:8000/scrapbooks/${scrapbookId}`, {
+        headers: {
+          authorization: accessToken,
+        },
+      });
       setScrapbooks((prevScrapbooks) =>
         prevScrapbooks.filter((scrapbook) => scrapbook.id !== scrapbookId)
       );
     } catch (error) {
-      console.error('Error deleting scrapbook:', error);
+      console.error("Error deleting scrapbook:", error);
     }
   };
 
   const handleEditScrapbook = (scrapbookId) => {
-    const scrapbook = scrapbooks.find((scrapbook) => scrapbook.id === scrapbookId);
+    const scrapbook = scrapbooks.find(
+      (scrapbook) => scrapbook.id === scrapbookId
+    );
     if (scrapbook) {
       setEditScrapbookId(scrapbookId);
       setEditScrapbookTitle(scrapbook.title);
@@ -108,7 +107,7 @@ const MyDrawer = () => {
 
   const handleUpdateScrapbook = async () => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       await axios.put(
         `http://localhost:8000/scrapbooks/${editScrapbookId}`,
         {
@@ -130,7 +129,7 @@ const MyDrawer = () => {
       );
       setEditScrapbookModalOpen(false);
     } catch (error) {
-      console.error('Error updating scrapbook:', error);
+      console.error("Error updating scrapbook:", error);
     }
   };
 
@@ -147,7 +146,7 @@ const MyDrawer = () => {
 
   const handleUpdateTopic = async () => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       await axios.put(
         `http://localhost:8000/topics/${editTopicId}`,
         {
@@ -172,13 +171,13 @@ const MyDrawer = () => {
       );
       setEditTopicModalOpen(false);
     } catch (error) {
-      console.error('Error updating topic:', error);
+      console.error("Error updating topic:", error);
     }
   };
 
   const handleAddTopic = async (selectedScrapbookId, topicTitle) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       await axios.post(
         `http://localhost:8000/topics/addTopic`,
         {
@@ -193,16 +192,16 @@ const MyDrawer = () => {
         }
       );
       setAddTopicModalOpen(false);
-      setSelectedScrapbookId('');
+      setSelectedScrapbookId("");
       fetchScrapbooks();
     } catch (error) {
-      console.error('Error adding topic:', error);
+      console.error("Error adding topic:", error);
     }
   };
 
   const handleDeleteTopic = async (topicId) => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem("accessToken");
       await axios.delete(`http://localhost:8000/topics/${topicId}`, {
         headers: {
           authorization: accessToken,
@@ -210,7 +209,7 @@ const MyDrawer = () => {
       });
       fetchScrapbooks();
     } catch (error) {
-      console.error('Error deleting topic:', error);
+      console.error("Error deleting topic:", error);
     }
   };
 
@@ -226,9 +225,8 @@ const MyDrawer = () => {
   };
 
   const [addTopicModalOpen, setAddTopicModalOpen] = useState(false);
-  const [selectedScrapbookId, setSelectedScrapbookId] = useState('');
-  const [newTopicTitle, setNewTopicTitle] = useState('');
-
+  const [selectedScrapbookId, setSelectedScrapbookId] = useState("");
+  const [newTopicTitle, setNewTopicTitle] = useState("");
 
   const handleAddTopicModalOpen = (scrapbookId) => {
     setSelectedScrapbookId(scrapbookId);
@@ -237,20 +235,20 @@ const MyDrawer = () => {
 
   const handleAddTopicModalClose = () => {
     setAddTopicModalOpen(false);
-    setSelectedScrapbookId('');
-    setNewTopicTitle('');
+    setSelectedScrapbookId("");
+    setNewTopicTitle("");
   };
 
   const handleEditScrapbookModalClose = () => {
     setEditScrapbookModalOpen(false);
     setEditScrapbookId(null);
-    setEditScrapbookTitle('');
+    setEditScrapbookTitle("");
   };
 
   const handleEditTopicModalClose = () => {
     setEditTopicModalOpen(false);
     setEditTopicId(null);
-    setEditTopicTitle('');
+    setEditTopicTitle("");
   };
 
   return (
@@ -276,9 +274,7 @@ const MyDrawer = () => {
               <IconButton onClick={() => handleDeleteScrapbook(scrapbook.id)}>
                 <DeleteIcon />
               </IconButton>
-              <IconButton
-                onClick={() => handleAddTopicModalOpen(scrapbook.id)}
-              >
+              <IconButton onClick={() => handleAddTopicModalOpen(scrapbook.id)}>
                 <AddIcon />
               </IconButton>
             </ListItem>
@@ -307,12 +303,12 @@ const MyDrawer = () => {
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             width: 400,
-            bgcolor: 'background.paper',
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
           }}
@@ -337,12 +333,12 @@ const MyDrawer = () => {
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             width: 400,
-            bgcolor: 'background.paper',
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
           }}
@@ -360,7 +356,7 @@ const MyDrawer = () => {
           </Button>
           <IconButton
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 8,
               right: 8,
             }}
@@ -371,18 +367,15 @@ const MyDrawer = () => {
         </Box>
       </Modal>
       {/* Add Topic Modal */}
-      <Modal
-        open={addTopicModalOpen}
-        onClose={handleAddTopicModalClose}
-      >
+      <Modal open={addTopicModalOpen} onClose={handleAddTopicModalClose}>
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             width: 400,
-            bgcolor: 'background.paper',
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
           }}
@@ -403,7 +396,7 @@ const MyDrawer = () => {
           </Button>
           <IconButton
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 8,
               right: 8,
             }}
@@ -414,18 +407,15 @@ const MyDrawer = () => {
         </Box>
       </Modal>
       {/* Edit Topic Modal */}
-      <Modal
-        open={editTopicModalOpen}
-        onClose={handleEditTopicModalClose}
-      >
+      <Modal open={editTopicModalOpen} onClose={handleEditTopicModalClose}>
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             width: 400,
-            bgcolor: 'background.paper',
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
           }}
@@ -443,7 +433,7 @@ const MyDrawer = () => {
           </Button>
           <IconButton
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 8,
               right: 8,
             }}

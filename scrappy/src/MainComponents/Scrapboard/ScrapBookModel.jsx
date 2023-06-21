@@ -1,11 +1,13 @@
-import TopicModel from './TopicModel';
+import TopicModel from "./TopicModel";
 export default class ScrapBookModel {
   constructor(data) {
     this.id = data._id;
     this.userId = data.userId;
     this.title = data.title;
     this.createdOn = data.createdOn;
-    this.topics = data.topics.map((topicData) => TopicModel.fromApiResponse(topicData)) || [];
+    this.topics =
+      data.topics.map((topicData) => TopicModel.fromApiResponse(topicData)) ||
+      [];
     this.isExpanded = false;
   }
 
@@ -26,7 +28,7 @@ export default class ScrapBookModel {
   }
 
   static fromApiResponse(data) {
-    console.log("Data Here:", data)
+    console.log("Data Here:", data);
     return new ScrapBookModel(data);
   }
 }
